@@ -20,8 +20,33 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
     </head>
     <body>
-        <header th:fragmen="nav">
-            
+        <header th:fragment="nav">
+            <ul class="nav nav-pills">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Cronogramas</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Administrar cronogramas</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Ausencias</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Administrar vacaciones</a></li>
+                        <li><a class="dropdown-item" href="#">Administrar cronogramas</a></li>
+                        <li><a class="dropdown-item" href="#">Administrar incapacidades</a></li>
+                        <li><a class="dropdown-item" href="#">Administrar feriados</a></li>
+                        <li><a class="dropdown-item" href="#">Administrar motivos</a></li>
+                        <li><a class="dropdown-item" href="#">Otros</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Usuarios</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Administrar profesores</a></li>
+                        <li><a class="dropdown-item" href="#">Administradores de Servicios</a></li>
+                    </ul>
+                </li>
+            </ul>
         </header>
     </body>
 </html>
