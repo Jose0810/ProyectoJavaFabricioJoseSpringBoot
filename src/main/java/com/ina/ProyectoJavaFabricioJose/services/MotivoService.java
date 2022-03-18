@@ -24,9 +24,9 @@ public class MotivoService implements IMotivoService {
         } catch (Exception e) {
             resultado = 0;
         }
-        finally{
+    
             return resultado;
-        }
+
     }
 
     @Override
@@ -37,9 +37,9 @@ public class MotivoService implements IMotivoService {
         } catch (Exception e) {
             resultado = 0;
         }
-        finally{
+
             return resultado;
-        }
+        
     }
 
     @Override
@@ -48,8 +48,8 @@ public class MotivoService implements IMotivoService {
     }
 
     @Override
-    public List<Motivo> listar(String motivo) {
-        return (List<Motivo>) motivoDao.findByJustificacionContains(motivo);
+    public List<Motivo> listar(String justificacion) {
+        return (List<Motivo>) motivoDao.findByJustificacionContains(justificacion);
     }
 
     @Override

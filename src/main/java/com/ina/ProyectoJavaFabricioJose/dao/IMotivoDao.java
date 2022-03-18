@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface IMotivoDao extends JpaRepository<Motivo,Integer>{
     
-    public Iterable<Motivo> findByJustificacionContains(String motivo);
+    public Iterable<Motivo> findByJustificacionContains(String justificacion);
     
     
 }

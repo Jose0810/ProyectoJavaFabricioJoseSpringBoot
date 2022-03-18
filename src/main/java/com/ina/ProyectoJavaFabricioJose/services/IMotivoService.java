@@ -15,6 +15,6 @@ public interface IMotivoService {
     public int guardar(Motivo motivo);
     public int eliminar(Motivo motivo);
     public List<Motivo> listar();
-    public List<Motivo> listar(String motivo);
+    public List<Motivo> listar(String justificacion);
     public Motivo obtenerMotivo(int idMotivo);
 }

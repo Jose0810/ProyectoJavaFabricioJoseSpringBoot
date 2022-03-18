@@ -19,72 +19,87 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class MotivosController {
+
     @Autowired
     private MotivoService motivoService;
-    
+
     @GetMapping("/motivos")
-    public String listaCliente(Model model, @ModelAttribute("msg") String msg){
-       List<Motivo> lista = motivoService.listar();
-       model.addAttribute("motivos", lista);
+    public String listaCliente(Model model, @ModelAttribute("msg") String msg) {
+        List<Motivo> lista = motivoService.listar();
+        model.addAttribute("motivos", lista);
         return "listaMotivos";
     }
-    
+
     @PostMapping("/filtrarMotivos")
-    public String filtar(String txtTexto, Model model){
+    public String filtar(String txtTexto, Model model) {
         List<Motivo> lista = motivoService.listar(txtTexto);
         model.addAttribute("motivos", lista);
         return "listaMotivos";
     }
-    
-    
+
     @GetMapping("/nuevoMotivo")
-    public String nuevo(Motivo motivo){
-        
+    public String nuevo(Motivo motivo) {
+
         return "motivo";
     }
-    
+
     @PostMapping("/guardarMotivo")
-    public String guardar(@Valid Motivo motivo, RedirectAttributes redir){
+    public String guardar(@Valid Motivo motivo, RedirectAttributes redir) {
         String msg = "";
-        
-        if (motivoService.guardar(motivo) == 0){
-            msg = "Cliente insertado";
+
+        if (motivoService.guardar(motivo) != 0) {
+            msg = "Motivo insertado";
+        } else {
+            msg = "No se pudo insertar el motivo";
         }
-        else{
-            msg = "No se pudo insertar al cliente";
-        }
-        
+
         redir.addFlashAttribute("msg", msg);
-        
+
         return "redirect:/motivos";
     }
-    
+
     @GetMapping("/editarMotivo/{idMotivo}")
-    public String editar(Motivo motivo, Model model, RedirectAttributes redir){
-        
-        motivo= motivoService.obtenerMotivo(motivo.getIdMotivo());
+    public String editar(Motivo motivo, Model model, RedirectAttributes redir) {
+
+        motivo = motivoService.obtenerMotivo(motivo.getIdMotivo());
         if (motivo != null) {
             model.addAttribute("motivo", motivo);
             return "motivo";
         }
-        String msg="No se logró cagar el motivo";
-        
+        String msg = "No se logró cagar el motivo";
+
         redir.addFlashAttribute("msg", msg);
-        
+
         return "redirect:/motivos";
     }
-    
-    @GetMapping("/eliminarMotivo")
-    public String eliminar(Motivo motivo, Model model, RedirectAttributes redir){
-      motivo= motivoService.obtenerMotivo(motivo.getIdMotivo());
+
+    @GetMapping("/confirmarEliminacion")
+    public String eliminar(Motivo motivo, Model model, RedirectAttributes redir) {
+        
+        motivo = motivoService.obtenerMotivo(motivo.getIdMotivo());
         if (motivo != null) {
             model.addAttribute("motivo", motivo);
             return "eliminarMotivo";
         }
-        String msg="No se logró cagar el motivo";
-        
+        String msg = "No se logró cagar el motivo";
+
         redir.addFlashAttribute("msg", msg);
-        
+
+        return "redirect:/motivos";
+    }
+    
+    @PostMapping("/eliminarMotivo")
+    public String eliminar(@Valid Motivo motivo, RedirectAttributes redir) {
+        String msg = "";
+
+        if (motivoService.eliminar(motivo) != 0) {
+            msg = "Motivo eliminado";
+        } else {
+            msg = "No se pudo eliminar el motivo";
+        }
+
+        redir.addFlashAttribute("msg", msg);
+
         return "redirect:/motivos";
     }
 }
