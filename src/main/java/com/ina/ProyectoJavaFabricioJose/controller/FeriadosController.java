@@ -30,23 +30,23 @@ public class FeriadosController {
     
 
     @GetMapping("/feriados")
-    public String listaCliente(String txtTexto, Model model, @ModelAttribute("msg") String msg) {
+    public String listaCliente(String txtTexto, Model model) {
+        
+        Calendar cal = Calendar.getInstance();
+         
+        int year = cal.get(Calendar.YEAR);
         List<DiaFeriado> lista;
-//        if (txtTexto == null) {
-//            LocalDate fecha = LocalDate.now();
-//            lista = colectivoService.listar(fecha.getYear());
-//        }
-//        else{
-            lista = feriadoService.listar(Integer.parseInt(txtTexto));
-//        }
+        lista = feriadoService.listar(String.valueOf(year));
         model.addAttribute("feriados", lista);
+        model.addAttribute("year", year);
         return "listaDiasFeriados";
+        
     }
 
     @PostMapping("/filtrarFeriados")
-    public String filtar(String txtTexto, Model model) {
-//        List<DiaColectivo> lista = colectivoService.listar(Integer.parseInt(txtTexto));
-//        model.addAttribute("colectivos", lista);
+    public String filtar(String txtTexto, Model model) {        
+        List<DiaFeriado> lista = feriadoService.listar(txtTexto);
+        model.addAttribute("feriados", lista);
         return "listaDiasFeriados";
     }
 

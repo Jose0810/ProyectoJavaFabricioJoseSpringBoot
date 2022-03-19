@@ -9,14 +9,15 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 
+
 /**
  *
  * @author josea
  */
 public interface IFeriadoDao extends JpaRepository<DiaFeriado, Integer> {
     
-    @Query(value = "Select d from DIAS_FERIADOS d WHERE YEAR(FECHA) =?1")
-    public Iterable<DiaFeriado> buscarPorAnio(int anio);
+    @Query(value = "Select * from DIAS_FERIADOS d WHERE YEAR(FECHA) =?1", nativeQuery = true)
+    public Iterable<DiaFeriado> buscarPorAnio(String anio);
 
 
 }

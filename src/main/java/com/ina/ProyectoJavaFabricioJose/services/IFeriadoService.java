@@ -15,6 +15,6 @@ public interface IFeriadoService {
     public int guardar(DiaFeriado feriado);
     public int eliminar(DiaFeriado feriado);
     public List<DiaFeriado> listar();
-    public List<DiaFeriado> listar(int anio);
+    public List<DiaFeriado> listar(String anio);
     public DiaFeriado obtenerFeriado(int dia);
 }

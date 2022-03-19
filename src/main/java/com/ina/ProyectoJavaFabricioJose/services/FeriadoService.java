@@ -14,13 +14,13 @@ import com.ina.ProyectoJavaFabricioJose.dao.IFeriadoDao;
 public class FeriadoService implements IFeriadoService {
 
     @Autowired
-    private IFeriadoDao colectivoDao;
+    private IFeriadoDao feriadoDao;
 
     @Override
     public int guardar(DiaFeriado colectivo) {
         int resultado = 1;
         try {
-            colectivoDao.save(colectivo);
+            feriadoDao.save(colectivo);
         } catch (Exception e) {
             resultado = 0;
         }
@@ -32,7 +32,7 @@ public class FeriadoService implements IFeriadoService {
     public int eliminar(DiaFeriado colectivo) {
         int resultado = 1;
         try {
-            colectivoDao.delete(colectivo);
+            feriadoDao.delete(colectivo);
         } catch (Exception e) {
             resultado = 0;
         }
@@ -42,17 +42,17 @@ public class FeriadoService implements IFeriadoService {
 
     @Override
     public List<DiaFeriado> listar() {
-        return colectivoDao.findAll();
+        return feriadoDao.findAll();
     }
 
     @Override
-    public List<DiaFeriado> listar(int anio) {
-        return (List<DiaFeriado>) colectivoDao.buscarPorAnio(anio);
+    public List<DiaFeriado> listar(String anio) {
+        return (List<DiaFeriado>) feriadoDao.buscarPorAnio(anio);
     }
 
     @Override
     public DiaFeriado obtenerFeriado(int idDia) {
-        return colectivoDao.getById(idDia);
+        return feriadoDao.getById(idDia);
     }
 
 }

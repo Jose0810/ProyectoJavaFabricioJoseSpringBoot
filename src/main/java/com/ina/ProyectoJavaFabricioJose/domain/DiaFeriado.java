@@ -32,7 +32,7 @@ public class DiaFeriado implements Serializable {
     private int idDia;
     
     @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "yyyy/dd/MM")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Column(name = "FECHA")
     private Calendar fecha;
     

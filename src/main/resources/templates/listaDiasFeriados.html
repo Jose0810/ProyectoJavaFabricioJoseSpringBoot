@@ -27,20 +27,20 @@
                 </div>
                 
                 <div class="row align-items-center">
-                    <form class="form" style="margin-top: 2%; margin-bottom: 2%" th:action="@{/filtrarColectivos}" method="post">
+                    <form class="form" style="margin-top: 2%; margin-bottom: 2%" th:action="@{/filtrarFeriados}" method="post">
                         <div class="input-group">
                             <div class="col">
                                 
-                                <input type="number" name="txtTexto" id="anio"
-                                       placeholder="Ingrese un año para buscar dias colectivos" 
+                                <input type="number" name="txtTexto" id="anio" th:value="${year}"
+                                       placeholder="Ingrese un año para buscar dias feriados" 
                                        class="form-control" style="border-radius: 1%"
-                                       />
+                                        />
                             </div>
                             <div  class="col col-lg-2">
                                 <input style="width: 200px;border-radius: 1%"   type="submit" name="btnBuscar" value="Buscar" class="btn btn-warning mx-auto" />
                             </div>
                             <div  class="col col-lg-2">
-                                <a style="width: 150px" class="btn btn-warning mx-auto" th:href="@{/nuevoColectivo}"><i class="fas fa-user-plus"></i>Nuevo</a>
+                                <a style="width: 150px" class="btn btn-warning mx-auto" th:href="@{/nuevoFeriado}"><i class="fas fa-user-plus"></i>Nuevo</a>
                             </div> 
                         </div>
                     </form>
@@ -49,24 +49,20 @@
                 
 
 
-                <div th:if="${colectivos != null and !colectivos.empty}">
+                <div th:if="${feriados != null and !feriados.empty}">
                     <table class="table table-hover table-striped">
                         <thead>
                             <tr>
-                                <th style="visibility: hidden">ID</th>
                                 <th>Fecha</th>
-                                <th style="visibility: hidden">IDMotivo</th>
                                 <th>Motivo</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="col{colectivos}">
-                                <td style="visibility: hidden" th:text="${col.idDia}"></td>
-                                <td th:text="${col.fecha}"></td>
-                                <td style="visibility: hidden" th:text="${col.motivo.idMotivo}"></td>
-                                <td th:text="${col.motivo.justificacion}"></td>
+                            <tr th:each="col:${feriados}">
+                                <td th:text="${#dates.format(col.fecha,'dd/MM/yyyy')}"></td>
+                                <td th:text="${col.Motivo.justificacion}"></td>
                                 <td>
-                                    <a th:href="@{/editarColectivo/} + ${col.idDia}">
+                                    <a th:href="@{/editarFeriados/} + ${col.idDia}">
                                         <i class="fas fa-user-edit"></i> Editar</a> |
                                     <a th:href="@{/confirmarEliminacionCol/} + ${col.idDia}">
                                         <i class="fas fa-user-times"></i> Eliminar</a>
@@ -76,7 +72,7 @@
                     </table>
 
                 </div>
-                <div th:if="${colectivos == null or colectivos.empty}">
+                <div th:if="${feriados == null or feriados.empty}">
                     No hay dias colectivos que mostrar
                 </div>
             </div>
