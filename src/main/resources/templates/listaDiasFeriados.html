@@ -1,12 +1,9 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
+
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns="http://www.w3.org/1999/xhtml">
     <head th:replace="plantillas/plantilla1 ::head">
-        <title>Motivos</title>
+        <title>Colectivos</title>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
@@ -17,7 +14,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <div class="container-lg p-20 bg-warning">
             <div class="container-lg" style="background-color: antiquewhite">
                 <div class="card border-0 bg-warning" style="margin-top: 2%" >
-                    <div class="card-header"> <h1>Lista de motivos</h1></div>
+                    <div class="card-header"> <h1>Lista de colectivos</h1></div>
                 </div>
                 
                 <div th:if="${ msg != null and !msg.empty}">
@@ -30,11 +27,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 </div>
                 
                 <div class="row align-items-center">
-                    <form class="form" style="margin-top: 2%; margin-bottom: 2%" th:action="@{/filtrarMotivos}" method="post">
+                    <form class="form" style="margin-top: 2%; margin-bottom: 2%" th:action="@{/filtrarColectivos}" method="post">
                         <div class="input-group">
                             <div class="col">
-                                <input type="text" name="txtTexto" 
-                                       placeholder="Ingrese un motivo a buscar" 
+                                
+                                <input type="number" name="txtTexto" id="anio"
+                                       placeholder="Ingrese un año para buscar dias colectivos" 
                                        class="form-control" style="border-radius: 1%"
                                        />
                             </div>
@@ -42,7 +40,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                 <input style="width: 200px;border-radius: 1%"   type="submit" name="btnBuscar" value="Buscar" class="btn btn-warning mx-auto" />
                             </div>
                             <div  class="col col-lg-2">
-                                <a style="width: 150px" class="btn btn-warning mx-auto" th:href="@{/nuevoMotivo}"><i class="fas fa-user-plus"></i>Nuevo</a>
+                                <a style="width: 150px" class="btn btn-warning mx-auto" th:href="@{/nuevoColectivo}"><i class="fas fa-user-plus"></i>Nuevo</a>
                             </div> 
                         </div>
                     </form>
@@ -51,23 +49,26 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 
 
 
-                <div th:if="${motivos != null and !motivos.empty}">
+                <div th:if="${colectivos != null and !colectivos.empty}">
                     <table class="table table-hover table-striped">
                         <thead>
                             <tr>
                                 <th style="visibility: hidden">ID</th>
+                                <th>Fecha</th>
+                                <th style="visibility: hidden">IDMotivo</th>
                                 <th>Motivo</th>
-                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="mot:${motivos}">
-                                <td style="visibility: hidden" th:text="${mot.idMotivo}"></td>
-                                <td th:text="${mot.justificacion}"></td>
+                            <tr th:each="col{colectivos}">
+                                <td style="visibility: hidden" th:text="${col.idDia}"></td>
+                                <td th:text="${col.fecha}"></td>
+                                <td style="visibility: hidden" th:text="${col.motivo.idMotivo}"></td>
+                                <td th:text="${col.motivo.justificacion}"></td>
                                 <td>
-                                    <a th:href="@{/editarMotivo/} + ${mot.idMotivo}">
+                                    <a th:href="@{/editarColectivo/} + ${col.idDia}">
                                         <i class="fas fa-user-edit"></i> Editar</a> |
-                                    <a th:href="@{/confirmarEliminacion/} + ${mot.idMotivo}">
+                                    <a th:href="@{/confirmarEliminacionCol/} + ${col.idDia}">
                                         <i class="fas fa-user-times"></i> Eliminar</a>
                                 </td>
                             </tr>
@@ -75,8 +76,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                     </table>
 
                 </div>
-                <div th:if="${motivos == null or motivos.empty}">
-                    No hay motivos que mostrar
+                <div th:if="${colectivos == null or colectivos.empty}">
+                    No hay dias colectivos que mostrar
                 </div>
             </div>
         </div>

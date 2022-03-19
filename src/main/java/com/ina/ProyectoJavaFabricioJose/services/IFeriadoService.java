@@ -1,0 +1,20 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
+ */
+package com.ina.ProyectoJavaFabricioJose.services;
+
+import com.ina.ProyectoJavaFabricioJose.domain.DiaFeriado;
+import java.util.List;
+
+/**
+ *
+ * @author josea
+ */
+public interface IFeriadoService {
+    public int guardar(DiaFeriado feriado);
+    public int eliminar(DiaFeriado feriado);
+    public List<DiaFeriado> listar();
+    public List<DiaFeriado> listar(int anio);
+    public DiaFeriado obtenerFeriado(int dia);
+}

@@ -73,7 +73,7 @@ public class MotivosController {
         return "redirect:/motivos";
     }
 
-    @GetMapping("/confirmarEliminacion")
+    @GetMapping("/confirmarEliminacion/{idMotivo}")
     public String eliminar(Motivo motivo, Model model, RedirectAttributes redir) {
         
         motivo = motivoService.obtenerMotivo(motivo.getIdMotivo());
