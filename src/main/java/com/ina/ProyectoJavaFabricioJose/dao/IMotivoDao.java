@@ -16,4 +16,6 @@ public interface IMotivoDao extends JpaRepository<Motivo,Integer>{
     public Iterable<Motivo> findByJustificacionContains(String justificacion);
     
     
+    
+    
 }

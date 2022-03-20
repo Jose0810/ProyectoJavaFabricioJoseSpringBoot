@@ -5,6 +5,7 @@
 package com.ina.ProyectoJavaFabricioJose.controller;
 
 import com.ina.ProyectoJavaFabricioJose.domain.DiaFeriado;
+import com.ina.ProyectoJavaFabricioJose.domain.Motivo;
 import com.ina.ProyectoJavaFabricioJose.services.FeriadoService;
 import com.ina.ProyectoJavaFabricioJose.services.IMotivoService;
 import com.ina.ProyectoJavaFabricioJose.services.MotivoService;
@@ -21,37 +22,45 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.ina.ProyectoJavaFabricioJose.services.IFeriadoService;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 @Controller
 public class FeriadosController {
-    
+
     @Autowired
     private IFeriadoService feriadoService;
-    
+
+    @Autowired
+    private IMotivoService motivoService;
 
     @GetMapping("/feriados")
     public String listaCliente(String txtTexto, Model model) {
-        
+
         Calendar cal = Calendar.getInstance();
-         
+
         int year = cal.get(Calendar.YEAR);
         List<DiaFeriado> lista;
         lista = feriadoService.listar(String.valueOf(year));
         model.addAttribute("feriados", lista);
         model.addAttribute("year", year);
         return "listaDiasFeriados";
-        
+
     }
 
     @PostMapping("/filtrarFeriados")
-    public String filtar(String txtTexto, Model model) {        
+    public String filtar(String txtTexto, Model model) {
         List<DiaFeriado> lista = feriadoService.listar(txtTexto);
         model.addAttribute("feriados", lista);
         return "listaDiasFeriados";
     }
 
     @GetMapping("/nuevoFeriado")
-    public String nuevo(DiaFeriado feriado) {
+    public String nuevo(DiaFeriado feriado, Model model) {
+
+        List<Motivo> lista = motivoService.listar();
+
+        model.addAttribute("motivos", lista);
 
         return "feriado";
     }
@@ -60,10 +69,24 @@ public class FeriadosController {
     public String guardar(@Valid DiaFeriado feriado, RedirectAttributes redir) {
         String msg = "";
 
-        if (feriadoService.guardar(feriado) != 0) {
-            msg = "Día feriado insertado";
+        Calendar cal = null;
+        DateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+        feriado.getFecha() = (Date) formatter.parse(feriado.getFecha().toString());
+        cal = Calendar.getInstance();
+        cal.setTime(feriado.getFecha());
+
+        if (feriadoService.fechaRepetida(fecha).isEmpty()) {
+            if (feriadoService.motivoRepetido(feriado.getMotivo().getIdMotivo()).isEmpty()) {
+                if (feriadoService.guardar(feriado) != 0) {
+                    msg = "Día feriado insertado";
+                } else {
+                    msg = "No se pudo insertar el día feriado";
+                }
+            } else {
+                msg = "No se pudo insertar, ya existe ese motivo para esa año";
+            }
         } else {
-            msg = "No se pudo insertar el día feriado";
+            msg = "No se pudo insertar, ya que existe un día feriado con esa fecha";
         }
 
         redir.addFlashAttribute("msg", msg);
@@ -88,7 +111,7 @@ public class FeriadosController {
 
     @GetMapping("/confirmarEliminacion/{idFeriado}")
     public String eliminar(DiaFeriado feriado, Model model, RedirectAttributes redir) {
-        
+
         feriado = feriadoService.obtenerFeriado(feriado.getIdDia());
         if (feriado != null) {
             model.addAttribute("colectivo", feriado);
@@ -100,7 +123,7 @@ public class FeriadosController {
 
         return "redirect:/feriados";
     }
-    
+
     @PostMapping("/eliminarFeriado")
     public String eliminar(@Valid DiaFeriado feriado, RedirectAttributes redir) {
         String msg = "";
@@ -115,5 +138,5 @@ public class FeriadosController {
 
         return "redirect:/feriados";
     }
-    
+
 }

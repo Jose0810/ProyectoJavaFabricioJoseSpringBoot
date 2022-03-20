@@ -5,8 +5,6 @@
 package com.ina.ProyectoJavaFabricioJose.domain;
 
 import java.io.Serializable;
-import java.util.Calendar;
-import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,30 +13,27 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.validation.constraints.NotEmpty;
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 @Data
 @Entity
-@Table(name = "DIAS_FERIADOS")
-public class DiaFeriado implements Serializable {
+@Table(name = "CANTONES")
+public class Canton implements Serializable{
     
-    private static final long serialVersionUID=1L;
-     
+    private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID_DIA_FERIADO")
-    private int idDia;
+    @Column(name = "ID_CANTON")
+    private Long idCanton;
     
-    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(iso = ISO.DATE)
-    @Column(name = "FECHA", unique = true)
-    private Date fecha;
+    @NotEmpty(message = "Por favor, ingrese el nombre de la provincia")
+    @Column(name = "NOMBRE_CANTON")
+    private String nombreCanton;
     
-    @JoinColumn(name = "ID_MOTIVO", nullable = false)
+    @JoinColumn(name = "ID_PROVINCIA", nullable = false)
     @ManyToOne(optional = false)
-    private Motivo motivo;
+    private Provincia provincia;
+    
 }
