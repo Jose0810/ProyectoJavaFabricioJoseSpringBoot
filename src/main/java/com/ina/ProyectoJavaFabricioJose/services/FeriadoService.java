@@ -61,9 +61,6 @@ public class FeriadoService implements IFeriadoService {
         return  (List<DiaFeriado>) feriadoDao.motivoRepetido(idMotivo);
     }
     
-    @Override
-    public List<DiaFeriado> fechaRepetida(Date fecha) {
-        return (List<DiaFeriado>) feriadoDao.findByFechaContains(fecha);
-    }
+
 
 }

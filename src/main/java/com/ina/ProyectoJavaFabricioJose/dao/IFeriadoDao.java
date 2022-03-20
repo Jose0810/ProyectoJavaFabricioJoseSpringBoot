@@ -20,10 +20,10 @@ public interface IFeriadoDao extends JpaRepository<DiaFeriado, Integer> {
     @Query(value = "Select * from DIAS_FERIADOS d WHERE YEAR(FECHA) =?1", nativeQuery = true)
     public Iterable<DiaFeriado> buscarPorAnio(String anio);
     
-    @Query(value = "Select 1 from DIAS_FERIADOS d WHERE ID_MOTIVO =?1", nativeQuery = true)
+    @Query(value = "Select * from DIAS_FERIADOS d WHERE ID_MOTIVO =?1", nativeQuery = true)
     public Iterable<DiaFeriado> motivoRepetido(int idMotivo);
     
-    public Iterable<DiaFeriado> findByFechaContains(Date fecha);
+
 
 
 }

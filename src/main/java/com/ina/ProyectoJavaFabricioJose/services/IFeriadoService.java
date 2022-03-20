@@ -19,5 +19,4 @@ public interface IFeriadoService {
     public List<DiaFeriado> listar(String anio);
     public DiaFeriado obtenerFeriado(int dia);
     public List<DiaFeriado> motivoRepetido(int idMotivo);
-    public List<DiaFeriado> fechaRepetida(Date fecha);
 }

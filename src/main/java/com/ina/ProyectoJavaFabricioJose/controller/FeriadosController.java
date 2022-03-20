@@ -69,13 +69,6 @@ public class FeriadosController {
     public String guardar(@Valid DiaFeriado feriado, RedirectAttributes redir) {
         String msg = "";
 
-        Calendar cal = null;
-        DateFormat formatter = new SimpleDateFormat("yyyyMMdd");
-        feriado.getFecha() = (Date) formatter.parse(feriado.getFecha().toString());
-        cal = Calendar.getInstance();
-        cal.setTime(feriado.getFecha());
-
-        if (feriadoService.fechaRepetida(fecha).isEmpty()) {
             if (feriadoService.motivoRepetido(feriado.getMotivo().getIdMotivo()).isEmpty()) {
                 if (feriadoService.guardar(feriado) != 0) {
                     msg = "Día feriado insertado";
@@ -85,9 +78,6 @@ public class FeriadosController {
             } else {
                 msg = "No se pudo insertar, ya existe ese motivo para esa año";
             }
-        } else {
-            msg = "No se pudo insertar, ya que existe un día feriado con esa fecha";
-        }
 
         redir.addFlashAttribute("msg", msg);
 
