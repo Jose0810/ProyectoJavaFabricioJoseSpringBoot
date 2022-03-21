@@ -4,66 +4,60 @@
  */
 package com.ina.ProyectoJavaFabricioJose.services;
 
-import com.ina.ProyectoJavaFabricioJose.dao.IProgramaDao;
-import com.ina.ProyectoJavaFabricioJose.domain.Programa;
+import com.ina.ProyectoJavaFabricioJose.domain.Profesor;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ProgramaService implements IProgramaService{
-    
+public class ProfesorService implements IProfesorService {
+
     @Autowired
-    private IProgramaDao programaDao;
+    private IProfesorService profesorService;
 
     @Override
-    public void guardar(Programa programa) {
+    public void guardar(Profesor profesor) {
         try {
-            programaDao.save(programa);
+            profesorService.guardar(profesor);
         } catch (Exception e) {
             throw e;
         }
     }
 
     @Override
-    public void eliminar(Programa programa) {
+    public void eliminar(Profesor profesor) {
         try {
-            programaDao.delete(programa);
+            profesorService.eliminar(profesor);
         } catch (Exception e) {
             throw e;
         }
     }
 
     @Override
-    public List<Programa> listar() {
+    public List<Profesor> listar() {
         try {
-            return programaDao.findAll();
+            return profesorService.listar();
         } catch (Exception e) {
             throw e;
         }
     }
 
     @Override
-    public List<Programa> listar(String nombrePrograma) {
+    public List<Profesor> listar(String nombre) {
         try {
-            return (List<Programa>) programaDao.findByNombreProgramaContains(nombrePrograma);
+            return profesorService.listar(nombre);
         } catch (Exception e) {
             throw e;
         }
     }
 
     @Override
-    public Programa obtenerModulo(Integer idPrograma) {
+    public Profesor obtenerProfesor(Integer idProfesor) {
         try {
-            return programaDao.findById(idPrograma).orElse(null);
+            return profesorService.obtenerProfesor(idProfesor);
         } catch (Exception e) {
             throw e;
         }
     }
 
-    @Override
-    public List<Programa> listarProgramasConCronogramas() {
-        return (List<Programa>) programaDao.listarProgrmasConCronogramas();
-    }
-    
 }
