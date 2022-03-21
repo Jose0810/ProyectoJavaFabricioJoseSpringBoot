@@ -60,4 +60,8 @@ public class Centro implements Serializable {
     @OneToMany(mappedBy = "centroDiaColectivo")
     private List<DiasAusentesColectivos> diaColectivo;
     
+    //Relación de un centro a muchos cronogramas
+    @OneToMany(mappedBy = "centroCronograma")
+    private List<Cronograma> cronograma;
+    
 }
