@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface IFeriadoService {
     public int guardar(DiaFeriado feriado);
-    public int eliminar(DiaFeriado feriado);
+    public int eliminar(Integer idDia);
     public List<DiaFeriado> listar();
     public List<DiaFeriado> listar(String anio);
     public DiaFeriado obtenerFeriado(int dia);

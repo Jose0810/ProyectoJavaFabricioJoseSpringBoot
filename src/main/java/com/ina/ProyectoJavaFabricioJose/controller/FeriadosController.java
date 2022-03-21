@@ -6,24 +6,16 @@ package com.ina.ProyectoJavaFabricioJose.controller;
 
 import com.ina.ProyectoJavaFabricioJose.domain.DiaFeriado;
 import com.ina.ProyectoJavaFabricioJose.domain.Motivo;
-import com.ina.ProyectoJavaFabricioJose.services.FeriadoService;
 import com.ina.ProyectoJavaFabricioJose.services.IMotivoService;
-import com.ina.ProyectoJavaFabricioJose.services.MotivoService;
-import java.time.LocalDate;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.ina.ProyectoJavaFabricioJose.services.IFeriadoService;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
 @Controller
 public class FeriadosController {
@@ -44,6 +36,7 @@ public class FeriadosController {
         lista = feriadoService.listar(String.valueOf(year));
         model.addAttribute("feriados", lista);
         model.addAttribute("year", year);
+        model.addAttribute("diaFeriado", null);
         return "listaDiasFeriados";
 
     }
@@ -59,7 +52,6 @@ public class FeriadosController {
     public String nuevo(DiaFeriado feriado, Model model) {
 
         List<Motivo> lista = motivoService.listar();
-
         model.addAttribute("motivos", lista);
 
         return "feriado";
@@ -69,63 +61,38 @@ public class FeriadosController {
     public String guardar(@Valid DiaFeriado feriado, RedirectAttributes redir) {
         String msg = "";
 
-            if (feriadoService.motivoRepetido(feriado.getMotivo().getIdMotivo()).isEmpty()) {
-                if (feriadoService.guardar(feriado) != 0) {
-                    msg = "Día feriado insertado";
-                } else {
-                    msg = "No se pudo insertar el día feriado";
-                }
+        if (feriadoService.motivoRepetido(feriado.getMotivo().getIdMotivo()).isEmpty()) {
+            if (feriadoService.guardar(feriado) != 0) {
+                msg = "Día feriado insertado";
             } else {
-                msg = "No se pudo insertar, ya existe ese motivo para esa año";
+                msg = "No se pudo insertar el día feriado";
             }
-
-        redir.addFlashAttribute("msg", msg);
-
-        return "redirect:/feriados";
-    }
-
-    @GetMapping("/editarFeriados/{idFeriado}")
-    public String editar(DiaFeriado feriado, Model model, RedirectAttributes redir) {
-
-        feriado = feriadoService.obtenerFeriado(feriado.getIdDia());
-        if (feriado != null) {
-            model.addAttribute("feriado", feriado);
-            return "feriado";
-        }
-        String msg = "No se logró cargar el feriado";
-
-        redir.addFlashAttribute("msg", msg);
-
-        return "redirect:/feriados";
-    }
-
-    @GetMapping("/confirmarEliminacion/{idFeriado}")
-    public String eliminar(DiaFeriado feriado, Model model, RedirectAttributes redir) {
-
-        feriado = feriadoService.obtenerFeriado(feriado.getIdDia());
-        if (feriado != null) {
-            model.addAttribute("colectivo", feriado);
-            return "eliminarFeriado";
-        }
-        String msg = "No se logró cargar el feriado";
-
-        redir.addFlashAttribute("msg", msg);
-
-        return "redirect:/feriados";
-    }
-
-    @PostMapping("/eliminarFeriado")
-    public String eliminar(@Valid DiaFeriado feriado, RedirectAttributes redir) {
-        String msg = "";
-
-        if (feriadoService.eliminar(feriado) != 0) {
-            msg = "Feriado eliminado";
         } else {
-            msg = "No se pudo eliminar el feriado";
+            msg = "No se pudo insertar, ya existe ese motivo para esa año";
         }
 
         redir.addFlashAttribute("msg", msg);
 
+        return "redirect:/feriados";
+    }
+
+    @PostMapping("/editarFeriados/{idDia}")
+    public String editar(DiaFeriado diaFeriado, Model model) {
+
+        diaFeriado = feriadoService.obtenerFeriado(diaFeriado.getIdDia());
+        if (diaFeriado != null) {
+            model.addAttribute("diaFeriado", diaFeriado);
+        }
+        String msg = "No se logró cargar el feriado";
+
+        return "redirect:/feriados";
+    }
+
+    @RequestMapping(value = "/delete", method = {RequestMethod.DELETE, RequestMethod.GET,RequestMethod.PUT })
+    public String eliminar(Integer idDia, Model model) {
+        DiaFeriado diaFeriado = feriadoService.obtenerFeriado(idDia);
+        model.addAttribute("diaFeriado", diaFeriado);
+        feriadoService.eliminar(idDia);
         return "redirect:/feriados";
     }
 

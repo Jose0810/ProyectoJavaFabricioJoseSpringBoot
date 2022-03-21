@@ -30,10 +30,10 @@ public class FeriadoService implements IFeriadoService {
     }
 
     @Override
-    public int eliminar(DiaFeriado colectivo) {
+    public int eliminar(Integer idDia) {
         int resultado = 1;
         try {
-            feriadoDao.delete(colectivo);
+            feriadoDao.deleteById(idDia);
         } catch (Exception e) {
             resultado = 0;
         }
