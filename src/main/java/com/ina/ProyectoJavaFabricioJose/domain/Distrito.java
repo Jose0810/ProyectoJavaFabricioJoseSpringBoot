@@ -20,27 +20,26 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "CANTONES")
-public class Canton implements Serializable {
-
+@Table(name = "DISTRITOS")
+public class Distrito implements Serializable {
+    
     private static final long serialVersionUID = 1L;
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID_CANTON")
-    private Long idCanton;
-
-    @NotEmpty(message = "Por favor, ingrese el nombre de la provincia")
-    @Column(name = "NOMBRE_CANTON")
-    private String nombreCanton;
-
-    //Relación de muchos cantones a una provincia
-    @JoinColumn(name = "ID_PROVINCIA", nullable = false)
+    @Column(name = "ID_DISTRITO")
+    private Long idDistrito;
+    
+    @NotEmpty(message = "Por favor, ingrese el nombre del distrito")
+    @Column(name = "NOMBRE_DISTRITO")
+    private String nombreDistrito;
+    
+    //Relación de muchos distritos a un cantón
+    @JoinColumn(name = "ID_CANTON", nullable = false)
     @ManyToOne(optional = false)
-    private Provincia provincia;
-
-    //Relación de un cantón a muchos distritos
-    @OneToMany(mappedBy = "canton")
-    private List<Distrito> distritos;
-
+    private Canton canton;
+    
+    //Relación de un distrito a muchos centros
+    @OneToMany(mappedBy = "distrito")
+    private List<Centro> centros;
 }

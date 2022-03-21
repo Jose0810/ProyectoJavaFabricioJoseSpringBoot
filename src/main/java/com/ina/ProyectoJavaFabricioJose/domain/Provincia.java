@@ -28,6 +28,7 @@ public class Provincia implements Serializable {
     @Column(name = "NOMBRE_PROVINCIA")
     private String nombreProvincia;
     
+    //Relación de una provincia a muchos cantones
     @OneToMany(mappedBy = "provincia")
     private List<Canton> cantones;
 
