@@ -60,10 +60,5 @@ public class ProgramaService implements IProgramaService{
             throw e;
         }
     }
-
-    @Override
-    public List<Programa> listarProgramasConCronogramas() {
-        return (List<Programa>) programaDao.listarProgrmasConCronogramas();
-    }
     
 }

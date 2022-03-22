@@ -52,8 +52,8 @@ public class Centro implements Serializable {
     @OneToOne(mappedBy = "centroUsuario")
     private Usuario administrador;
     
-    //Relación de un centro a muchos programas
-    @OneToMany(mappedBy = "centros")
+    //Relación de un centro a muchos progrmas
+    @OneToMany(mappedBy = "centroPrograma")
     private List<Programa> programa;
     
     //Relación de un centro a muchos días colectivos

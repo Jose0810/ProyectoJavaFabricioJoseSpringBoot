@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import lombok.Data;
@@ -33,7 +34,7 @@ public class Programa implements Serializable {
     private int idPrograma;
     
     
-    @Column(name = "CODIGO", unique = true)
+    @Column(name = "CODIGO")
     @NotEmpty(message="El código del programa es obligatorio")
     private String codigo;
     
@@ -65,7 +66,7 @@ public class Programa implements Serializable {
     //Relación de muchos programas a un centro
     @JoinColumn(name = "ID_CENTRO", nullable = false)
     @ManyToOne(optional = false)
-    private Centro centro;
+    private Centro centroPrograma;
     
     @Column(name = "GRUPO")
     @NotEmpty(message="El grupo que recibe el programa es obligatorio")
